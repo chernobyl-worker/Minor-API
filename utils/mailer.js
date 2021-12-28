@@ -12,12 +12,12 @@ function sendWarning(details, res) {
         from: process.env.email,
         to: details.email,
         subject: `Warning mail from drunk driver system`,
-        text: `Alcohol was detected by the device with the ID: ${details.id}. 
-        Please take appropriate action.`
+        html: `Alcohol was detected by the device with the ID: ${details.id}. Please take appropriate action.`
     }
 
     transporter.sendMail(mail, (err, info) => {
-        res.send(err ? err : info);
+        if (err) res.status(500).send("Error");
+        else res.send(info);
     });
 }
 
